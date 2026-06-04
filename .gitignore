@@ -84,9 +84,9 @@ engine/TestResults/
 
 # addon debris
 /game/**/.sbox/*
-/game/**/*.sln
-/game/**/*.csproj
-/game/**/obj
+!/game/**/*.sln
+!/game/**/*.csproj
+!/game/**/obj
 /game/**/launchSettings.json
 
 #
@@ -95,7 +95,7 @@ engine/TestResults/
 /game/.source2
 /game/_toolsettings
 /game/bin/**/*.pdb
-/game/bin/**/*.dll
+!/game/bin/**/*.dll
 /game/bin/**/*.xml
 /game/bin/**/*.json
 !/game/bin/thirdparty/
