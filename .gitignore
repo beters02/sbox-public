@@ -98,6 +98,13 @@ engine/TestResults/
 /game/bin/**/*.dll
 /game/bin/**/*.xml
 /game/bin/**/*.json
+!/game/bin/thirdparty/
+!/game/bin/thirdparty/Forkbox.Steamworks.dll
+!/game/bin/thirdparty/Forkbox.Steamworks.xml
+!/game/bin/thirdparty/Forkbox.Steamworks.deps.json
+!/game/bin/thirdparty/Facepunch.Steamworks.Win64.dll
+!/game/bin/thirdparty/Facepunch.Steamworks.Win64.xml
+!/game/bin/thirdparty/Facepunch.Steamworks.Win64.deps.json
 /game/bin/win64/logs
 /game/config/**/*.json
 /game/config/**/*.json.backup

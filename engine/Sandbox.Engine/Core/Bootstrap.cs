@@ -253,7 +253,8 @@ internal static class Bootstrap
 				Log.Info( "Bootstrap Init Done" );
 			}
 
-			LoadThirdPartyLibraries();
+			LoadForkbox();
+			//LoadThirdPartyLibraries();
 
 			//
 			// Networking bootstrap
@@ -285,14 +286,32 @@ internal static class Bootstrap
 		}
 	}
 
+	private static void LoadForkbox()
+	{
+		var thirdPartyPath = GetThirdPartyPath();
+		if ( !Directory.Exists( thirdPartyPath ) )
+			return;
+
+		string path = Path.Join(thirdPartyPath, "Facepunch.Steamworks.Win64.dll");
+		if ( !File.Exists(path))
+		{
+			Log.Trace("COULD NOT FIND FORKBOX DLL!");
+			return;
+		}
+
+		LoadLibrary(path);
+		Log.Trace("Forkbox loaded");
+	}
+
 	private static void LoadThirdPartyLibraries()
 	{
-		var thirdPartyPath = Path.GetFullPath( Path.Combine( "bin", "thirdparty" ) );
+		var thirdPartyPath = GetThirdPartyPath();
 		if ( !Directory.Exists( thirdPartyPath ) )
 			return;
 
 		foreach ( var dll in Directory.EnumerateFiles( thirdPartyPath, "*.dll", SearchOption.TopDirectoryOnly ).Order() )
 		{
+			Log.Trace(dll);
 			if ( TryLoadManagedAssembly( dll ) )
 				continue;
 
@@ -308,6 +327,26 @@ internal static class Bootstrap
 
 			Log.Warning( $"Failed to load third-party DLL: {dll} (Win32: {Marshal.GetLastPInvokeError()})" );
 		}
+	}
+
+	private static string GetThirdPartyPath()
+	{
+		/*var assemblyDirectory = Path.GetDirectoryName( typeof( Bootstrap ).Assembly.Location );
+		var paths = new[]
+		{
+			Path.Combine( "bin", "thirdparty" ),
+			Path.Combine( "game", "bin", "thirdparty" ),
+			Path.Combine( AppContext.BaseDirectory, "bin", "thirdparty" ),
+			Path.Combine( AppContext.BaseDirectory, "..", "thirdparty" ),
+			assemblyDirectory is null ? null : Path.Combine( assemblyDirectory, "..", "thirdparty" )
+		};
+
+		return paths
+			.Where( x => !string.IsNullOrWhiteSpace( x ) )
+			.Select( Path.GetFullPath )
+			.Distinct( StringComparer.OrdinalIgnoreCase )
+			.FirstOrDefault( Directory.Exists ) ?? Path.GetFullPath( Path.Combine( "bin", "thirdparty" ) );*/
+		return "bin/thirdparty";
 	}
 
 	private static bool TryLoadManagedAssembly( string assemblyPath )

@@ -94,13 +94,43 @@ static class FrameworkReferences
 
 	private static PortableExecutableReference FindThirdPartyReference( string name )
 	{
-		var thirdPartyPath = Path.GetFullPath( Path.Combine( "bin", "thirdparty" ) );
-		var assemblyPath = Path.Combine( thirdPartyPath, $"{name}.dll" );
+		var assemblyPath = FindThirdPartyAssemblyPath( name );
 
-		if ( !File.Exists( assemblyPath ) )
+		if ( assemblyPath is null )
 			return null;
 
 		return MetadataReference.CreateFromFile( assemblyPath );
+	}
+
+	private static string FindThirdPartyAssemblyPath( string name )
+	{
+		foreach ( var thirdPartyPath in GetThirdPartyPaths() )
+		{
+			var assemblyPath = Path.Combine( thirdPartyPath, $"{name}.dll" );
+			if ( File.Exists( assemblyPath ) )
+				return assemblyPath;
+		}
+
+		return null;
+	}
+
+	private static IEnumerable<string> GetThirdPartyPaths()
+	{
+		var assemblyDirectory = Path.GetDirectoryName( typeof( FrameworkReferences ).Assembly.Location );
+
+		var paths = new[]
+		{
+			Path.Combine( "bin", "thirdparty" ),
+			Path.Combine( "game", "bin", "thirdparty" ),
+			Path.Combine( AppContext.BaseDirectory, "bin", "thirdparty" ),
+			Path.Combine( AppContext.BaseDirectory, "..", "thirdparty" ),
+			assemblyDirectory is null ? null : Path.Combine( assemblyDirectory, "..", "thirdparty" )
+		};
+
+		return paths
+			.Where( x => !string.IsNullOrWhiteSpace( x ) )
+			.Select( Path.GetFullPath )
+			.Distinct( StringComparer.OrdinalIgnoreCase );
 	}
 
 	private static List<string> LoadEmbeddedReferenceAssemblies()

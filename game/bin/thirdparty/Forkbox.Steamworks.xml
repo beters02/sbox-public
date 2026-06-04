@@ -1,0 +1,54 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Forkbox.Steamworks</name>
+    </assembly>
+    <members>
+        <member name="T:Forkbox.Steamworks.AuthToken">
+            <summary>
+            A Steam auth token returned by <see cref="M:Forkbox.Steamworks.SteamUser.GetAuthToken(System.String)"/>.
+            </summary>
+        </member>
+        <member name="P:Forkbox.Steamworks.AuthToken.Value">
+            <summary>
+            Steam Web API auth ticket string returned by the engine.
+            </summary>
+        </member>
+        <member name="P:Forkbox.Steamworks.AuthToken.Data">
+            <summary>
+            Raw ticket bytes that should be sent to the service that will authenticate the Steam user.
+            </summary>
+        </member>
+        <member name="P:Forkbox.Steamworks.AuthToken.Hex">
+            <summary>
+            Uppercase hexadecimal representation of <see cref="P:Forkbox.Steamworks.AuthToken.Data"/>.
+            </summary>
+        </member>
+        <member name="M:Forkbox.Steamworks.AuthToken.Cancel">
+            <summary>
+            Cancel the underlying Steam auth ticket.
+            </summary>
+        </member>
+        <member name="M:Forkbox.Steamworks.AuthToken.Dispose">
+            <inheritdoc />
+        </member>
+        <member name="M:Forkbox.Steamworks.AuthToken.ToString">
+            <inheritdoc />
+        </member>
+        <member name="T:Forkbox.Steamworks.SteamUser">
+            <summary>
+            Minimal Steam user auth wrapper for standalone fork builds.
+            </summary>
+        </member>
+        <member name="M:Forkbox.Steamworks.SteamUser.GetAuthToken(System.String)">
+            <summary>
+            Gets a Steam auth token for the named service.
+            </summary>
+        </member>
+        <member name="M:Forkbox.Steamworks.SteamUser.GetAuthTokenAsync(System.String,System.Double)">
+            <summary>
+            Gets a Steam auth token for the named service and waits for Steam to confirm the ticket is ready.
+            </summary>
+        </member>
+    </members>
+</doc>

@@ -89,8 +89,8 @@ class LoadContext : AssemblyLoadContext
 
 	private Assembly LoadThirdPartyAssembly( AssemblyName assemblyName )
 	{
-		var assemblyPath = Path.GetFullPath( Path.Combine( "bin", "thirdparty", $"{assemblyName.Name}.dll" ) );
-		if ( !File.Exists( assemblyPath ) )
+		var assemblyPath = FindThirdPartyAssemblyPath( assemblyName.Name );
+		if ( assemblyPath is null )
 			return null;
 
 		try
@@ -101,6 +101,37 @@ class LoadContext : AssemblyLoadContext
 		{
 			return null;
 		}
+	}
+
+	private static string FindThirdPartyAssemblyPath( string assemblyName )
+	{
+		foreach ( var thirdPartyPath in GetThirdPartyPaths() )
+		{
+			var assemblyPath = Path.Combine( thirdPartyPath, $"{assemblyName}.dll" );
+			if ( File.Exists( assemblyPath ) )
+				return assemblyPath;
+		}
+
+		return null;
+	}
+
+	private static IEnumerable<string> GetThirdPartyPaths()
+	{
+		var assemblyDirectory = Path.GetDirectoryName( typeof( LoadContext ).Assembly.Location );
+
+		var paths = new[]
+		{
+			Path.Combine( "bin", "thirdparty" ),
+			Path.Combine( "game", "bin", "thirdparty" ),
+			Path.Combine( AppContext.BaseDirectory, "bin", "thirdparty" ),
+			Path.Combine( AppContext.BaseDirectory, "..", "thirdparty" ),
+			assemblyDirectory is null ? null : Path.Combine( assemblyDirectory, "..", "thirdparty" )
+		};
+
+		return paths
+			.Where( x => !string.IsNullOrWhiteSpace( x ) )
+			.Select( Path.GetFullPath )
+			.Distinct( StringComparer.OrdinalIgnoreCase );
 	}
 
 	/// <summary>
