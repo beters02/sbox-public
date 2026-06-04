@@ -253,8 +253,8 @@ internal static class Bootstrap
 				Log.Info( "Bootstrap Init Done" );
 			}
 
-			LoadForkbox();
-			//LoadThirdPartyLibraries();
+			//LoadForkbox();
+			LoadThirdPartyLibraries();
 
 			//
 			// Networking bootstrap
@@ -331,7 +331,7 @@ internal static class Bootstrap
 
 	private static string GetThirdPartyPath()
 	{
-		/*var assemblyDirectory = Path.GetDirectoryName( typeof( Bootstrap ).Assembly.Location );
+		var assemblyDirectory = Path.GetDirectoryName( typeof( Bootstrap ).Assembly.Location );
 		var paths = new[]
 		{
 			Path.Combine( "bin", "thirdparty" ),
@@ -345,8 +345,8 @@ internal static class Bootstrap
 			.Where( x => !string.IsNullOrWhiteSpace( x ) )
 			.Select( Path.GetFullPath )
 			.Distinct( StringComparer.OrdinalIgnoreCase )
-			.FirstOrDefault( Directory.Exists ) ?? Path.GetFullPath( Path.Combine( "bin", "thirdparty" ) );*/
-		return "bin/thirdparty";
+			.FirstOrDefault( Directory.Exists ) ?? Path.GetFullPath( Path.Combine( "bin", "thirdparty" ) );
+		//return "bin/thirdparty";
 	}
 
 	private static bool TryLoadManagedAssembly( string assemblyPath )
