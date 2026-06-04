@@ -1,0 +1,35 @@
+C:\Users\Bryce\Documents\GitHub\sbox-public\game\.vs\output\Properties\launchSettings.json
+C:\Users\Bryce\Documents\GitHub\sbox-public\game\.vs\output\Base Library.staticwebassets.endpoints.json
+C:\Users\Bryce\Documents\GitHub\sbox-public\game\.vs\output\Base Library.xml
+C:\Users\Bryce\Documents\GitHub\sbox-public\game\.vs\output\Base Library.deps.json
+C:\Users\Bryce\Documents\GitHub\sbox-public\game\.vs\output\Base Library.dll
+C:\Users\Bryce\Documents\GitHub\sbox-public\game\.vs\output\Base Library.pdb
+C:\Users\Bryce\Documents\GitHub\sbox-public\game\addons\base\code\obj\Release\EmbeddedAttribute.cs
+C:\Users\Bryce\Documents\GitHub\sbox-public\game\addons\base\code\obj\Release\ValidatableTypeAttribute.cs
+C:\Users\Bryce\Documents\GitHub\sbox-public\game\addons\base\code\obj\Release\Base Library.csproj.AssemblyReference.cache
+C:\Users\Bryce\Documents\GitHub\sbox-public\game\addons\base\code\obj\Release\rpswa.dswa.cache.json
+C:\Users\Bryce\Documents\GitHub\sbox-public\game\addons\base\code\obj\Release\Base Library.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Bryce\Documents\GitHub\sbox-public\game\addons\base\code\obj\Release\Base Library.AssemblyInfoInputs.cache
+C:\Users\Bryce\Documents\GitHub\sbox-public\game\addons\base\code\obj\Release\Base Library.AssemblyInfo.cs
+C:\Users\Bryce\Documents\GitHub\sbox-public\game\addons\base\code\obj\Release\Base Library.csproj.CoreCompileInputs.cache
+C:\Users\Bryce\Documents\GitHub\sbox-public\game\addons\base\code\obj\Release\Base Library.sourcelink.json
+C:\Users\Bryce\Documents\GitHub\sbox-public\game\addons\base\code\obj\Release\rjimswa.dswa.cache.json
+C:\Users\Bryce\Documents\GitHub\sbox-public\game\addons\base\code\obj\Release\rjsmrazor.dswa.cache.json
+C:\Users\Bryce\Documents\GitHub\sbox-public\game\addons\base\code\obj\Release\rjsmcshtml.dswa.cache.json
+C:\Users\Bryce\Documents\GitHub\sbox-public\game\addons\base\code\obj\Release\scopedcss\bundle\Base Library.styles.css
+C:\Users\Bryce\Documents\GitHub\sbox-public\game\addons\base\code\obj\Release\staticwebassets.build.json
+C:\Users\Bryce\Documents\GitHub\sbox-public\game\addons\base\code\obj\Release\staticwebassets.build.json.cache
+C:\Users\Bryce\Documents\GitHub\sbox-public\game\addons\base\code\obj\Release\staticwebassets.development.json
+C:\Users\Bryce\Documents\GitHub\sbox-public\game\addons\base\code\obj\Release\staticwebassets.build.endpoints.json
+C:\Users\Bryce\Documents\GitHub\sbox-public\game\addons\base\code\obj\Release\swae.build.ex.cache
+C:\Users\Bryce\Documents\GitHub\sbox-public\game\addons\base\code\obj\Release\staticwebassets\msbuild.Base Library.Microsoft.AspNetCore.StaticWebAssets.props
+C:\Users\Bryce\Documents\GitHub\sbox-public\game\addons\base\code\obj\Release\staticwebassets\msbuild.Base Library.Microsoft.AspNetCore.StaticWebAssetEndpoints.props
+C:\Users\Bryce\Documents\GitHub\sbox-public\game\addons\base\code\obj\Release\staticwebassets\msbuild.build.Base Library.props
+C:\Users\Bryce\Documents\GitHub\sbox-public\game\addons\base\code\obj\Release\staticwebassets\msbuild.buildMultiTargeting.Base Library.props
+C:\Users\Bryce\Documents\GitHub\sbox-public\game\addons\base\code\obj\Release\staticwebassets\msbuild.buildTransitive.Base Library.props
+C:\Users\Bryce\Documents\GitHub\sbox-public\game\addons\base\code\obj\Release\staticwebassets.pack.json
+C:\Users\Bryce\Documents\GitHub\sbox-public\game\addons\base\code\obj\Release\Base Lib.2E4D897B.Up2Date
+C:\Users\Bryce\Documents\GitHub\sbox-public\game\addons\base\code\obj\Release\Base Library.dll
+C:\Users\Bryce\Documents\GitHub\sbox-public\game\addons\base\code\obj\Release\refint\Base Library.dll
+C:\Users\Bryce\Documents\GitHub\sbox-public\game\addons\base\code\obj\Release\Base Library.pdb
+C:\Users\Bryce\Documents\GitHub\sbox-public\game\addons\base\code\obj\Release\ref\Base Library.dll
