@@ -78,7 +78,29 @@ class LoadContext : AssemblyLoadContext
 			}
 		}
 
+		var thirdPartyAssembly = LoadThirdPartyAssembly( assemblyName );
+		if ( thirdPartyAssembly is not null )
+		{
+			return thirdPartyAssembly;
+		}
+
 		return base.Load( assemblyName );
+	}
+
+	private Assembly LoadThirdPartyAssembly( AssemblyName assemblyName )
+	{
+		var assemblyPath = Path.GetFullPath( Path.Combine( "bin", "thirdparty", $"{assemblyName.Name}.dll" ) );
+		if ( !File.Exists( assemblyPath ) )
+			return null;
+
+		try
+		{
+			return LoadFromAssemblyPath( assemblyPath );
+		}
+		catch ( BadImageFormatException )
+		{
+			return null;
+		}
 	}
 
 	/// <summary>

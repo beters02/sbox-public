@@ -68,7 +68,7 @@ public sealed partial class Project
 			//
 			foreach ( var reference in compilerSettings.DistinctAssemblyReferences )
 			{
-				project.References.Add( $"{reference}.dll" );
+				project.AddAssemblyReference( reference );
 			}
 
 			//
@@ -99,7 +99,6 @@ public sealed partial class Project
 			}
 			else if ( Config.Type == "game" || Config.Type == "library" || Config.Type == "addon" )
 			{
-				project.AddForkboxSteamworksReference();
 				project.AddAspComponentsGlobalUsing();
 				project.AddGameNamespaceGlobalStatic();
 
@@ -195,13 +194,12 @@ public sealed partial class Project
 
 		foreach ( var reference in serverSettings.DistinctAssemblyReferences )
 		{
-			project.References.Add( $"{reference}.dll" );
+			project.AddAssemblyReference( reference );
 		}
 
 		// Add standard references
 		if ( Config.Type == "game" || Config.Type == "library" )
 		{
-			project.AddForkboxSteamworksReference();
 			project.AddAspComponentsGlobalUsing();
 			project.AddGameNamespaceGlobalStatic();
 
@@ -233,7 +231,7 @@ public sealed partial class Project
 		//
 		foreach ( var reference in compilerSettings.DistinctAssemblyReferences )
 		{
-			project.References.Add( $"{reference}.dll" );
+			project.AddAssemblyReference( reference );
 		}
 
 		if ( (Config.Type == "game" || Config.Type == "addon") && !IsBuiltIn )
@@ -246,7 +244,6 @@ public sealed partial class Project
 		}
 
 		project.AddToolAssemblyReferences();
-		project.AddForkboxSteamworksReference();
 		project.AddToolPackageReferences();
 		project.AddToolsNamespaceGlobalStatic();
 		project.AddGameNamespaceGlobalStatic();
@@ -269,11 +266,10 @@ public sealed partial class Project
 		//
 		foreach ( var reference in compilerSettings.DistinctAssemblyReferences )
 		{
-			project.References.Add( $"{reference}.dll" );
+			project.AddAssemblyReference( reference );
 		}
 
 		project.AddToolAssemblyReferences();
-		project.AddForkboxSteamworksReference();
 		project.AddToolPackageReferences();
 		project.AddToolsNamespaceGlobalStatic();
 		project.AddGameNamespaceGlobalStatic();
@@ -302,11 +298,17 @@ file static class ProjectExtensions
 		}
 
 		/// <summary>
-		/// Add the fork-only Steamworks auth wrapper reference.
+		/// Add an explicit assembly reference requested by the project's compiler settings.
 		/// </summary>
-		public void AddForkboxSteamworksReference()
+		public void AddAssemblyReference( string reference )
 		{
-			project.References.Add( "../thirdparty/Forkbox.Steamworks.dll" );
+			if ( reference.Equals( "Forkbox.Steamworks", StringComparison.OrdinalIgnoreCase ) )
+			{
+				project.References.Add( "../thirdparty/Forkbox.Steamworks.dll" );
+				return;
+			}
+
+			project.References.Add( $"{reference}.dll" );
 		}
 
 		/// <summary>

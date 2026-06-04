@@ -104,7 +104,6 @@ public static partial class EditorUtility
 
 			logOutput?.Invoke( $"Generating code.." );
 			compiler.GeneratedCode.AppendLine( "global using static Sandbox.Internal.GlobalGameNamespace;" );
-			compiler.AddReference( "Forkbox.Steamworks" );
 
 			// Required by razor
 			compiler.GeneratedCode.AppendLine( "global using Microsoft.AspNetCore.Components;" );
