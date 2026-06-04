@@ -58,7 +58,7 @@ class LoadContext : AssemblyLoadContext
 	protected override Assembly Load( AssemblyName assemblyName )
 	{
 		// library.log.Trace( $"Searching for {assemblyName}" );
-
+		
 		foreach ( var assembly in Assemblies )
 		{
 			if ( assembly.GetName().Name == assemblyName.Name )
@@ -67,21 +67,30 @@ class LoadContext : AssemblyLoadContext
 			}
 		}
 
-		if ( root is not null )
-		{
-			var rootContext = GetLoadContext( root );
-			var asm = rootContext?.LoadFromAssemblyName( assemblyName ) ?? default;
-
-			if ( asm is not null )
-			{
-				return asm;
-			}
-		}
-
 		var thirdPartyAssembly = LoadThirdPartyAssembly( assemblyName );
 		if ( thirdPartyAssembly is not null )
 		{
 			return thirdPartyAssembly;
+		}
+
+		if ( root is not null )
+		{
+			try
+			{
+				var rootContext = GetLoadContext( root );
+				var asm = rootContext?.LoadFromAssemblyName( assemblyName ) ?? default;
+
+				if ( asm is not null )
+				{
+					return asm;
+				}
+			}
+			catch ( FileNotFoundException )
+			{
+			}
+			catch ( FileLoadException )
+			{
+			}
 		}
 
 		return base.Load( assemblyName );
