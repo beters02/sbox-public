@@ -103,6 +103,7 @@ public partial class Project
 			Compiler.GeneratedCode.AppendLine( $"global using Microsoft.AspNetCore.Components;" );
 			Compiler.GeneratedCode.AppendLine( $"global using Microsoft.AspNetCore.Components.Rendering;" );
 			Compiler.GeneratedCode.AppendLine( $"global using static Sandbox.Internal.GlobalGameNamespace;" );
+			Compiler.AddReference( "Forkbox.Steamworks" );
 			if ( Config.Type == "tool" )
 			{
 				Compiler.GeneratedCode.AppendLine( $"global using static Sandbox.Internal.GlobalToolsNamespace;" );
@@ -205,6 +206,7 @@ public partial class Project
 
 		EditorCompiler.AddReference( "Sandbox.Tools" );
 		EditorCompiler.AddReference( "Sandbox.Compiling" );
+		EditorCompiler.AddReference( "Forkbox.Steamworks" );
 		EditorCompiler.AddReference( "System.Diagnostics.Process" );
 		EditorCompiler.AddReference( "System.Net.WebSockets" );
 		EditorCompiler.AddReference( "System.Net.WebSockets.Client" );
