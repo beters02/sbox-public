@@ -99,6 +99,7 @@ public sealed partial class Project
 			}
 			else if ( Config.Type == "game" || Config.Type == "library" || Config.Type == "addon" )
 			{
+				project.AddForkboxSteamworksReference();
 				project.AddAspComponentsGlobalUsing();
 				project.AddGameNamespaceGlobalStatic();
 
@@ -200,6 +201,7 @@ public sealed partial class Project
 		// Add standard references
 		if ( Config.Type == "game" || Config.Type == "library" )
 		{
+			project.AddForkboxSteamworksReference();
 			project.AddAspComponentsGlobalUsing();
 			project.AddGameNamespaceGlobalStatic();
 
@@ -244,6 +246,7 @@ public sealed partial class Project
 		}
 
 		project.AddToolAssemblyReferences();
+		project.AddForkboxSteamworksReference();
 		project.AddToolPackageReferences();
 		project.AddToolsNamespaceGlobalStatic();
 		project.AddGameNamespaceGlobalStatic();
@@ -270,6 +273,7 @@ public sealed partial class Project
 		}
 
 		project.AddToolAssemblyReferences();
+		project.AddForkboxSteamworksReference();
 		project.AddToolPackageReferences();
 		project.AddToolsNamespaceGlobalStatic();
 		project.AddGameNamespaceGlobalStatic();
@@ -295,6 +299,14 @@ file static class ProjectExtensions
 			project.References.Add( "Sandbox.Bind.dll" );
 			project.References.Add( "Facepunch.ActionGraphs.dll" );
 			project.References.Add( "SkiaSharp.dll" );
+		}
+
+		/// <summary>
+		/// Add the fork-only Steamworks auth wrapper reference.
+		/// </summary>
+		public void AddForkboxSteamworksReference()
+		{
+			project.References.Add( "../thirdparty/Forkbox.Steamworks.dll" );
 		}
 
 		/// <summary>

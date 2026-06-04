@@ -18,6 +18,7 @@ public static partial class EditorUtility
 		{
 			bool isGame = project.Config.Type == "game";
 			var codePath = project.GetCodePath();
+			compilerSettings.Whitelist = false;
 
 			if ( !System.IO.Directory.Exists( codePath ) )
 				return default;
@@ -103,6 +104,7 @@ public static partial class EditorUtility
 
 			logOutput?.Invoke( $"Generating code.." );
 			compiler.GeneratedCode.AppendLine( "global using static Sandbox.Internal.GlobalGameNamespace;" );
+			compiler.AddReference( "Forkbox.Steamworks" );
 
 			// Required by razor
 			compiler.GeneratedCode.AppendLine( "global using Microsoft.AspNetCore.Components;" );

@@ -6,6 +6,10 @@ using Sandbox.VR;
 using Sentry;
 using Steamworks;
 using System.Diagnostics;
+using System.IO;
+using System.Reflection;
+using System.Runtime.InteropServices;
+using System.Runtime.Loader;
 using System.Threading;
 
 namespace Sandbox.Engine;
@@ -249,6 +253,8 @@ internal static class Bootstrap
 				Log.Info( "Bootstrap Init Done" );
 			}
 
+			LoadThirdPartyLibraries();
+
 			//
 			// Networking bootstrap
 			//
@@ -278,6 +284,64 @@ internal static class Bootstrap
 			EngineGlobal.Plat_ExitProcess( 1 );
 		}
 	}
+
+	private static void LoadThirdPartyLibraries()
+	{
+		var thirdPartyPath = Path.GetFullPath( Path.Combine( "bin", "thirdparty" ) );
+		if ( !Directory.Exists( thirdPartyPath ) )
+			return;
+
+		foreach ( var dll in Directory.EnumerateFiles( thirdPartyPath, "*.dll", SearchOption.TopDirectoryOnly ).Order() )
+		{
+			if ( TryLoadManagedAssembly( dll ) )
+				continue;
+
+			if ( !OperatingSystem.IsWindows() )
+				continue;
+
+			var handle = LoadLibrary( dll );
+			if ( handle != IntPtr.Zero )
+			{
+				Log.Trace( $"Loaded third-party DLL: {dll}" );
+				continue;
+			}
+
+			Log.Warning( $"Failed to load third-party DLL: {dll} (Win32: {Marshal.GetLastPInvokeError()})" );
+		}
+	}
+
+	private static bool TryLoadManagedAssembly( string assemblyPath )
+	{
+		try
+		{
+			var name = AssemblyName.GetAssemblyName( assemblyPath );
+			var loaded = AppDomain.CurrentDomain.GetAssemblies()
+				.Any( x => string.Equals( x.GetName().Name, name.Name, StringComparison.OrdinalIgnoreCase ) );
+
+			if ( loaded )
+				return true;
+
+			AssemblyLoadContext.Default.LoadFromAssemblyPath( assemblyPath );
+			Log.Trace( $"Loaded third-party managed assembly: {assemblyPath}" );
+			return true;
+		}
+		catch ( BadImageFormatException )
+		{
+			return false;
+		}
+		catch ( FileLoadException )
+		{
+			return true;
+		}
+		catch ( Exception e )
+		{
+			Log.Warning( e, $"Failed to load third-party managed assembly: {assemblyPath}" );
+			return true;
+		}
+	}
+
+	[DllImport( "kernel32.dll", SetLastError = true, CharSet = CharSet.Unicode )]
+	private static extern IntPtr LoadLibrary( string dllToLoad );
 
 	internal static void InitMinimal( string rootFolder )
 	{

@@ -27,6 +27,7 @@
     <Project Path="Launcher/StandaloneTest/Sbox-Launcher.csproj" />
   </Folder>
   <Folder Name="/Engine/Tier0/">
+    <Project Path="Forkbox.Steamworks/Forkbox.Steamworks.csproj" />
     <Project Path="Microsoft.AspNetCore.Components/Microsoft.AspNetCore.Components.csproj" />
     <Project Path="Sandbox.Access/Sandbox.Access.csproj" />
     <Project Path="Sandbox.Bind/Sandbox.Bind.csproj" />

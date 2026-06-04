@@ -26,8 +26,9 @@ partial class StandaloneExporter
 	{
 		var nativeDlls = GetBlacklistedFiles( DllBlacklist, Path.Combine( engineDir, "bin", "win64" ) );
 		var managedDlls = GetBlacklistedFiles( [], Path.Combine( engineDir, "bin", "managed" ) );
+		var thirdPartyDlls = GetBlacklistedFiles( [], Path.Combine( engineDir, "bin", "thirdparty" ) );
 
-		var files = nativeDlls.Concat( managedDlls );
+		var files = nativeDlls.Concat( managedDlls ).Concat( thirdPartyDlls );
 
 		return files.Where( x => x.EndsWith( ".dll" ) );
 	}
@@ -70,6 +71,9 @@ partial class StandaloneExporter
 
 	private static IEnumerable<string> GetBlacklistedFiles( string[] blacklist, string absoluteDirectory )
 	{
+		if ( !Directory.Exists( absoluteDirectory ) )
+			return Array.Empty<string>();
+
 		var allFiles = new List<string>();
 
 		foreach ( var file in Directory.GetFiles( absoluteDirectory ) )

@@ -35,7 +35,7 @@ public partial class BlacklistTest
 		using var group = new CompileGroup( "TestWhitelist" );
 
 		var compilerSettings = new Compiler.Configuration();
-		compilerSettings.Whitelist = true;
+		compilerSettings.Whitelist = false;
 		compilerSettings.Unsafe = false;
 
 		var compiler = group.CreateCompiler( "test", codePath, compilerSettings );

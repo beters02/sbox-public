@@ -34,7 +34,7 @@ partial class Compiler
 		/// be "sandboxed", so won't be able to be published on the platform.
 		/// </summary>
 		[JsonIgnore]
-		public bool Whitelist { get; set; } = true;
+		public bool Whitelist { get; set; } = false;
 
 		/// <summary>
 		/// If true, we'll compile with /unsafe. This means that the package won't be able to

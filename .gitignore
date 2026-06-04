@@ -58,6 +58,17 @@ game/config/input/common.json
 engine/CodeGen.deps.json
 engine/CodeGen.runtimeconfig.json
 .generated
+engine/**/obj/
+!engine/Forkbox.Steamworks/Vendor/Facepunch.Steamworks.Win64.dll
+!engine/Forkbox.Steamworks/Vendor/Facepunch.Steamworks.Win64.xml
+!engine/Forkbox.Steamworks/Vendor/Facepunch.Steamworks.Win64.deps.json
+!/game/bin/thirdparty/
+!/game/bin/thirdparty/Forkbox.Steamworks.dll
+!/game/bin/thirdparty/Forkbox.Steamworks.xml
+!/game/bin/thirdparty/Forkbox.Steamworks.deps.json
+!/game/bin/thirdparty/Facepunch.Steamworks.Win64.dll
+!/game/bin/thirdparty/Facepunch.Steamworks.Win64.xml
+!/game/bin/thirdparty/Facepunch.Steamworks.Win64.deps.json
 game/core/shadercache/vulkan/shaders.cache
 engine/Sandbox.Compiling/EmbeddedRefs/*.xml
 game/*.xml

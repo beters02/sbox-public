@@ -66,6 +66,12 @@ static class FrameworkReferences
 			return frameworkReference;
 		}
 
+		var thirdPartyReference = FindThirdPartyReference( name );
+		if ( thirdPartyReference is not null )
+		{
+			return thirdPartyReference;
+		}
+
 		//
 		// Find the assembly in our list of loaded assemblies
 		// We should really only do this for things like Sandbox.* ?
@@ -84,6 +90,17 @@ static class FrameworkReferences
 
 
 		return MetadataReference.CreateFromFile( assembly.Location );
+	}
+
+	private static PortableExecutableReference FindThirdPartyReference( string name )
+	{
+		var thirdPartyPath = Path.GetFullPath( Path.Combine( "bin", "thirdparty" ) );
+		var assemblyPath = Path.Combine( thirdPartyPath, $"{name}.dll" );
+
+		if ( !File.Exists( assemblyPath ) )
+			return null;
+
+		return MetadataReference.CreateFromFile( assemblyPath );
 	}
 
 	private static List<string> LoadEmbeddedReferenceAssemblies()
