@@ -21,4 +21,12 @@
 		<TreatWarningsAsErrors>True</TreatWarningsAsErrors>
 	</PropertyGroup>
 
+	<ItemGroup>
+		<Reference Include="Facepunch.Steamworks.Win64">
+			<HintPath>Vendor/Facepunch.Steamworks.Win64.dll</HintPath>
+			<Private>true</Private>
+		</Reference>
+		<None Include="Vendor/Facepunch.Steamworks.Win64.xml" CopyToOutputDirectory="PreserveNewest" />
+	</ItemGroup>
+
 </Project>

@@ -5,6 +5,7 @@ using Sandbox.Network;
 using Sandbox.Rendering;
 using System;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Runtime;
 using System.Runtime.InteropServices;
@@ -381,10 +382,20 @@ public class AppSystem
 		if ( !OperatingSystem.IsWindows() )
 			return;
 
-		var dllName = $"{Environment.CurrentDirectory}\\bin\\win64\\steam_api64.dll";
+		var dllName = GetSteamApiDllPath();
+		log.Info( $"Loading Steam API DLL: {dllName}" );
 		if ( !NativeLibrary.TryLoad( dllName, out steamApiDll ) )
 		{
-			throw new System.Exception( "Couldn't load bin/win64/steam_api64.dll" );
+			throw new System.Exception( $"Couldn't load {dllName}" );
 		}
+	}
+
+	private static string GetSteamApiDllPath()
+	{
+		var forkDll = Path.Combine( Environment.CurrentDirectory, "bin", "thirdparty", "steam_api64.dll" );
+		if ( File.Exists( forkDll ) )
+			return forkDll;
+
+		return Path.Combine( Environment.CurrentDirectory, "bin", "win64", "steam_api64.dll" );
 	}
 }

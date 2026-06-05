@@ -3,6 +3,7 @@ using Native;
 using Sandbox.Diagnostics;
 using Sandbox.Engine;
 using System;
+using System.IO;
 using System.Runtime.InteropServices;
 
 namespace Sandbox;
@@ -92,10 +93,20 @@ public class QtAppSystem
 	/// </summary>
 	protected void LoadSteamDll()
 	{
-		var dllName = $"{Environment.CurrentDirectory}\\bin\\win64\\steam_api64.dll";
+		var dllName = GetSteamApiDllPath();
+		log.Info( $"Loading Steam API DLL: {dllName}" );
 		if ( !NativeLibrary.TryLoad( dllName, out steamApiDll ) )
 		{
-			throw new System.Exception( "Couldn't load bin/win64/steam_api64.dll" );
+			throw new System.Exception( $"Couldn't load {dllName}" );
 		}
+	}
+
+	private static string GetSteamApiDllPath()
+	{
+		var forkDll = Path.Combine( Environment.CurrentDirectory, "bin", "thirdparty", "steam_api64.dll" );
+		if ( File.Exists( forkDll ) )
+			return forkDll;
+
+		return Path.Combine( Environment.CurrentDirectory, "bin", "win64", "steam_api64.dll" );
 	}
 }

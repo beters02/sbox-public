@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\users\\bryce\\documents\\GitHub\\sbox-public\\game\\addons\\base\\code\\Base Library.csproj": {}
+    "C:\\Users\\Bryce\\Documents\\GitHub\\sbox-public\\game\\addons\\base\\code\\Base Library.csproj": {}
   },
   "projects": {
-    "C:\\users\\bryce\\documents\\GitHub\\sbox-public\\game\\addons\\base\\code\\Base Library.csproj": {
+    "C:\\Users\\Bryce\\Documents\\GitHub\\sbox-public\\game\\addons\\base\\code\\Base Library.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\users\\bryce\\documents\\GitHub\\sbox-public\\game\\addons\\base\\code\\Base Library.csproj",
+        "projectUniqueName": "C:\\Users\\Bryce\\Documents\\GitHub\\sbox-public\\game\\addons\\base\\code\\Base Library.csproj",
         "projectName": "Base Library",
-        "projectPath": "C:\\users\\bryce\\documents\\GitHub\\sbox-public\\game\\addons\\base\\code\\Base Library.csproj",
+        "projectPath": "C:\\Users\\Bryce\\Documents\\GitHub\\sbox-public\\game\\addons\\base\\code\\Base Library.csproj",
         "packagesPath": "C:\\Users\\Bryce\\.nuget\\packages\\",
-        "outputPath": "C:\\users\\bryce\\documents\\GitHub\\sbox-public\\game\\addons\\base\\code\\obj\\",
+        "outputPath": "C:\\Users\\Bryce\\Documents\\GitHub\\sbox-public\\game\\addons\\base\\code\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Bryce\\AppData\\Roaming\\NuGet\\NuGet.Config"

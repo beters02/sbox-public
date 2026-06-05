@@ -35,6 +35,31 @@
         <member name="M:Forkbox.Steamworks.AuthToken.ToString">
             <inheritdoc />
         </member>
+        <member name="T:Forkbox.Steamworks.SteamClient">
+            <summary>
+            Minimal Steam client bootstrap for the Forkbox Steamworks wrapper.
+            </summary>
+        </member>
+        <member name="M:Forkbox.Steamworks.SteamClient.Init(System.UInt32,System.Boolean)">
+            <summary>
+            Initialize the bundled Facepunch Steamworks client if it hasn't already been initialized.
+            </summary>
+        </member>
+        <member name="P:Forkbox.Steamworks.SteamClient.IsValid">
+            <summary>
+            True if the bundled Facepunch Steamworks client is initialized.
+            </summary>
+        </member>
+        <member name="M:Forkbox.Steamworks.SteamClient.RunCallbacks">
+            <summary>
+            Pump callbacks when initialized with asyncCallbacks set to false.
+            </summary>
+        </member>
+        <member name="M:Forkbox.Steamworks.SteamClient.Shutdown">
+            <summary>
+            Shutdown the bundled Facepunch Steamworks client.
+            </summary>
+        </member>
         <member name="T:Forkbox.Steamworks.SteamUser">
             <summary>
             Minimal Steam user auth wrapper for standalone fork builds.

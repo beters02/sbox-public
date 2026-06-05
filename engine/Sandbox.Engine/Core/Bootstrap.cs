@@ -311,6 +311,13 @@ internal static class Bootstrap
 
 		foreach ( var dll in Directory.EnumerateFiles( thirdPartyPath, "*.dll", SearchOption.TopDirectoryOnly ).Order() )
 		{
+			var fileName = Path.GetFileName( dll );
+			if ( ShouldSkipThirdPartyNativeDll( fileName ) )
+			{
+				Log.Trace( $"Skipped third-party DLL for this process: {dll}" );
+				continue;
+			}
+
 			Log.Trace(dll);
 			if ( TryLoadManagedAssembly( dll ) )
 				continue;
@@ -327,6 +334,17 @@ internal static class Bootstrap
 
 			Log.Warning( $"Failed to load third-party DLL: {dll} (Win32: {Marshal.GetLastPInvokeError()})" );
 		}
+	}
+
+	private static bool ShouldSkipThirdPartyNativeDll( string fileName )
+	{
+		if ( !OperatingSystem.IsWindows() )
+			return false;
+
+		if ( Environment.Is64BitProcess )
+			return string.Equals( fileName, "steam_api.dll", StringComparison.OrdinalIgnoreCase );
+
+		return string.Equals( fileName, "steam_api64.dll", StringComparison.OrdinalIgnoreCase );
 	}
 
 	private static string GetThirdPartyPath()
