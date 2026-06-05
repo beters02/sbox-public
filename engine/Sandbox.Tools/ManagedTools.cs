@@ -81,6 +81,7 @@ internal static class ManagedTools
 
 		while ( !AccountLoginTask.IsCompleted )
 		{
+			NativeEngine.Steam.SteamAPI_RunCallbacks();
 			Sandbox.Engine.IToolsDll.Current?.Spin();
 			System.Threading.Thread.Sleep( 16 );
 		}

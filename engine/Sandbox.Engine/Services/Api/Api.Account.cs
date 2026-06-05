@@ -28,10 +28,13 @@ internal static partial class Api
 		// For testing how the engine behaves when not receiving auth tokens.
 		if ( !UseSteamAuthentication ) return default;
 
+		LogSteamAuthDiagnostics( "start" );
+
 		var sw = Stopwatch.StartNew();
 
 		while ( true )
 		{
+			Log.Info( "Steam auth: requesting web auth ticket" );
 			EngineGlue.RequestWebAuthTicket();
 
 			// Check for ticket for 10 seconds total, every half a second
@@ -41,6 +44,12 @@ internal static partial class Api
 
 				if ( token != null ) goto gotTicket;
 
+				if ( i % 10 == 0 )
+				{
+					Log.Info( $"Steam auth: waiting for web auth ticket ({i / 10}s)" );
+					LogSteamAuthDiagnostics( $"pending {i / 10}s" );
+				}
+
 				await Task.Delay( 100 );
 			}
 
@@ -48,6 +57,7 @@ internal static partial class Api
 			EngineGlue.CancelWebAuthTicket();
 			await Task.Delay( 1000 );
 
+			LogSteamAuthDiagnostics( "timeout" );
 			Log.Warning( "Couldn't connect to Steam." );
 
 			return default;
@@ -56,6 +66,8 @@ internal static partial class Api
 		gotTicket:
 		try
 		{
+			Log.Info( $"Steam auth: got web auth ticket ({token.Length} chars)" );
+
 			if ( sw.Elapsed.TotalSeconds > 2.0f )
 			{
 				Log.Warning( $"Took {sw.Elapsed.TotalSeconds}s to get steam auth ticket" );
@@ -123,6 +135,29 @@ internal static partial class Api
 
 		IsConnected = true;
 		return result;
+	}
+
+	private static void LogSteamAuthDiagnostics( string stage )
+	{
+		try
+		{
+			var user = NativeEngine.Steam.SteamUser();
+			var friends = NativeEngine.Steam.SteamFriends();
+			var utils = NativeEngine.Steam.SteamUtils();
+
+			Log.Info( $"Steam auth ({stage}): Steamworks.SteamClient assembly={typeof( Steamworks.SteamClient ).Assembly.FullName}" );
+			Log.Info( $"Steam auth ({stage}): SteamClient.IsValid={Steamworks.SteamClient.IsValid}, SteamClient.SteamId={Steamworks.SteamClient.SteamId}, UtilitySteamId={Sandbox.Utility.Steam.SteamId}" );
+			Log.Info( $"Steam auth ({stage}): native user={user.IsValid}, friends={friends.IsValid}, utils={utils.IsValid}" );
+
+			foreach ( var assembly in AppDomain.CurrentDomain.GetAssemblies().Where( x => x.GetName().Name?.Contains( "Steamworks", StringComparison.OrdinalIgnoreCase ) == true ) )
+			{
+				Log.Info( $"Steam auth ({stage}): loaded assembly {assembly.GetName().Name} => {assembly.Location}" );
+			}
+		}
+		catch ( Exception e )
+		{
+			Log.Warning( e, $"Steam auth ({stage}): failed to gather diagnostics" );
+		}
 	}
 
 }

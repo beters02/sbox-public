@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Base Editor Library")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+0469a12e1e9ec3aa9ebfd246f88827a1d2ab0dc1")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+2c6266769b42e272ec3a227500e604cbbd1414eb")]
 [assembly: System.Reflection.AssemblyProductAttribute("Base Editor Library")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Base Editor Library")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

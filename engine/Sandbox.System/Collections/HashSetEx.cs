@@ -15,6 +15,7 @@ internal class HashSetEx<T> : IHotloadManaged
 	[SuppressNullKeyWarning]
 	private readonly HashSet<T> _hashset = new( 16 );
 	private readonly List<T> _cachedList = new( 16 );
+	private readonly object _lock = new();
 
 	private bool _listInvalid;
 	private int _activeEnumerators;
@@ -22,7 +23,16 @@ internal class HashSetEx<T> : IHotloadManaged
 	/// <summary>
 	/// Current number of unique items in the set.
 	/// </summary>
-	public int Count => _hashset.Count;
+	public int Count
+	{
+		get
+		{
+			lock ( _lock )
+			{
+				return _hashset.Count;
+			}
+		}
+	}
 
 	/// <summary>
 	/// List view of the set. This is only updated when there are no
@@ -32,8 +42,11 @@ internal class HashSetEx<T> : IHotloadManaged
 	{
 		get
 		{
-			UpdateList();
-			return _cachedList;
+			lock ( _lock )
+			{
+				UpdateList();
+				return _cachedList;
+			}
 		}
 	}
 
@@ -43,10 +56,13 @@ internal class HashSetEx<T> : IHotloadManaged
 	/// </summary>
 	public bool Add( T obj )
 	{
-		if ( !_hashset.Add( obj ) ) return false;
+		lock ( _lock )
+		{
+			if ( !_hashset.Add( obj ) ) return false;
 
-		_listInvalid = true;
-		return true;
+			_listInvalid = true;
+			return true;
+		}
 	}
 
 	/// <summary>
@@ -55,26 +71,38 @@ internal class HashSetEx<T> : IHotloadManaged
 	/// </summary>
 	public bool Remove( T obj )
 	{
-		if ( !_hashset.Remove( obj ) ) return false;
+		lock ( _lock )
+		{
+			if ( !_hashset.Remove( obj ) ) return false;
 
-		_listInvalid = true;
-		return true;
+			_listInvalid = true;
+			return true;
+		}
 	}
 
 	/// <summary>
 	/// Determines whether this set contains the given object.
 	/// </summary>
-	public bool Contains( T obj ) => _hashset.Contains( obj );
+	public bool Contains( T obj )
+	{
+		lock ( _lock )
+		{
+			return _hashset.Contains( obj );
+		}
+	}
 
 	/// <summary>
 	/// Remove all items from the set. If any enumerators are active, they won't be affected.
 	/// </summary>
 	public void Clear()
 	{
-		if ( _hashset.Count <= 0 ) return;
+		lock ( _lock )
+		{
+			if ( _hashset.Count <= 0 ) return;
 
-		_hashset.Clear();
-		_listInvalid = true;
+			_hashset.Clear();
+			_listInvalid = true;
+		}
 	}
 
 	/// <summary>
@@ -99,26 +127,30 @@ internal class HashSetEx<T> : IHotloadManaged
 	/// </summary>
 	public IEnumerable<T> EnumerateLocked( bool nullChecks = false )
 	{
-		try
+		lock ( _lock )
 		{
-			UpdateList();
-
-			_activeEnumerators++;
-
-			foreach ( var item in _cachedList )
+			try
 			{
-				if ( nullChecks && item is IValid { IsValid: false } )
-				{
-					Remove( item );
-					continue;
-				}
+				UpdateList();
 
-				yield return item;
+				_activeEnumerators++;
+
+				foreach ( var item in _cachedList )
+				{
+					if ( nullChecks && item is IValid { IsValid: false } )
+					{
+						Remove( item );
+						continue;
+					}
+
+					yield return item;
+				}
 			}
-		}
-		finally
-		{
-			_activeEnumerators--;
+			finally
+			{
+				_activeEnumerators--;
+				UpdateList();
+			}
 		}
 	}
 
@@ -126,6 +158,19 @@ internal class HashSetEx<T> : IHotloadManaged
 	// automatically removed from _hashset because it can't contain null items.
 	// Therefore, we'll need to rebuild _cachedList too.
 
-	void IHotloadManaged.Created( IReadOnlyDictionary<string, object> state ) => _listInvalid = true;
-	void IHotloadManaged.Persisted() => _listInvalid = true;
+	void IHotloadManaged.Created( IReadOnlyDictionary<string, object> state )
+	{
+		lock ( _lock )
+		{
+			_listInvalid = true;
+		}
+	}
+
+	void IHotloadManaged.Persisted()
+	{
+		lock ( _lock )
+		{
+			_listInvalid = true;
+		}
+	}
 }
