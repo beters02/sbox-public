@@ -46,7 +46,7 @@ public static class SteamUser
 			if ( token is not null )
 				return CreateAuthToken( token );
 
-			await Task.Delay( 100 ).ConfigureAwait( false );
+			await Task.Delay( 100 );
 		}
 
 		EngineGlue.Value.CancelWebAuthTicket();
