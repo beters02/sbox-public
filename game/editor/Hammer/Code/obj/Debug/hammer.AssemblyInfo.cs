@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("hammer")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+d79f9dc7844f25c81e82c407b3c0b9380aa64311")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+897a32f2f08567b8a10e37d0b41dadda4f792a95")]
 [assembly: System.Reflection.AssemblyProductAttribute("hammer")]
 [assembly: System.Reflection.AssemblyTitleAttribute("hammer")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
